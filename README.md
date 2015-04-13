@@ -11,6 +11,8 @@
   * instance_count
   * az_letters
   * network_prefix
+  * subnet_ids
+  * security_groups
   * aws_key_name
   * aws_key_location
   * account

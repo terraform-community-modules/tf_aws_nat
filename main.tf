@@ -11,8 +11,8 @@ resource "aws_instance" "nat" {
     instance_type = "${var.instance_type}"
     source_dest_check = false
     key_name = "${var.aws_key_name}"
-    subnet_id = "${element(split(\",\", module.vpc.frontsubnets), count.index)}"
-    security_groups = ["${aws_security_group.allow_all.id}"]
+    subnet_id = "${element(split(\",\", var.subnet_ids), count.index)}"
+    security_groups = ["${split(\",\", var.security_groups)}"]
     tags {
         Name = "NAT ${element(split(\",\", module.vpc.az_letters), count.index)}${count.index+1}"
     }
