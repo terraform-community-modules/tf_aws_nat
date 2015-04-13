@@ -1,3 +1,4 @@
+/*
 output "private_ips" {
   value = "${join(\",\", aws_instance.nat.*.private_ip)}"
 }
@@ -7,3 +8,4 @@ output "public_ips" {
 output "instance_ids" {
   value = "${join(\",\", aws_instance.nat.*.id)}"
 }
+*/
