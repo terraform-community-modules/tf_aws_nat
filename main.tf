@@ -1,3 +1,4 @@
+/*
 module "ami" {
   source = "github.com/terraform-community-modules/tf_aws_ubuntu_ami/ebs"
   instance_type = "${var.instance_type}"
@@ -27,4 +28,4 @@ resource "aws_instance" "nat" {
         }
     }
 }
-
+*/
