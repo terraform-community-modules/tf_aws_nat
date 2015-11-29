@@ -1,7 +1,7 @@
 variable "region" {}
 variable "instance_type" {}
 variable "instance_count" {}
-variable "az_letters" {}
+variable "az_list" {}
 variable "networkprefix" {}
 variable "subnet_ids" {}
 variable "security_groups" {}

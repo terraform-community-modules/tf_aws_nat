@@ -15,9 +15,9 @@ resource "aws_instance" "nat" {
     subnet_id = "${element(split(\",\", var.subnet_ids), count.index)}"
     security_groups = ["${split(\",\", var.security_groups)}"]
     tags {
-        Name = "NAT ${element(split(\",\", var.az_letters), count.index)}${count.index+1}"
+        Name = "NAT ${element(split(\",\", var.az_list), count.index)}${count.index+1}"
     }
-    user_data = "${replace(file(\"${path.module}/nat.conf\"), \"__NETWORKPREFIX__\", \"${var.networkprefix}\")}"
+    user_data = "${replace(replace(file(\"${path.module}/nat.conf\"), \"__NETWORKPREFIX__\", \"${var.networkprefix}\"), \"__MYAZ__\", element(split(\",\", var.az_list), count.index)}"
     provisioner "remote-exec" {
         inline = [
           "while sudo pkill -0 cloud-init; do sleep 2; done"
