@@ -10,6 +10,7 @@ resource "aws_instance" "nat" {
     ami = "${module.ami.ami_id}"
     instance_type = "${var.instance_type}"
     source_dest_check = false
+    iam_instance_profile = "${aws_iam_instance_profile.nat_profile.id}"
     key_name = "${var.aws_key_name}"
     subnet_id = "${element(split(\",\", var.subnet_ids), count.index)}"
     security_groups = ["${split(\",\", var.security_groups)}"]
