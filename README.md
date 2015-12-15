@@ -9,7 +9,7 @@
   * region
   * instance_type
   * instance_count
-  * az_letters
+  * az_list
   * network_prefix
   * subnet_ids
   * security_groups
