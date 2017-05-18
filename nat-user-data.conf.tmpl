@@ -63,6 +63,11 @@ write_files:
                     instance: SELF
                     healthcheck: public
                     if_unhealthy: true
+# The commands below need to run on every boot, but bootcmd runs too early,
+# before the write_files has run, but on every boot, where as runcmd only runs
+# on the first time this instance is booted.
+bootcmd:
+  - [ sh, -c, "[ -x /var/lib/cloud/instance/scripts/runcmd ] && /var/lib/cloud/instance/scripts/runcmd" ]
 runcmd:
  - [ sh, -c, "echo 1 > /proc/sys/net/ipv4/ip_forward;echo 655361 > /proc/sys/net/netfilter/nf_conntrack_max" ]
  - [ iptables, -N, LOGGINGF ]
