@@ -11,7 +11,8 @@
   * instance_type
   * instance_count
   * az_list
-  * subnet_ids
+  * public_subnet_ids
+  * private_subnet_ids
   * security_groups
   * aws_key_name
   * aws_key_location

@@ -18,8 +18,14 @@ variable "instance_count" {}
 variable "az_list" {
   type = "list"
 }
-variable "subnet_ids" {
+variable "public_subnet_ids" {
   type = "list"
+}
+variable "private_subnet_ids" {
+  type = "list"
+}
+variable "subnets_count" {
+  description = "The number of subnets in public_subnet_ids. Required because of hashicorp/terraform#1497"
 }
 variable "vpc_security_group_ids" {
   type = "list"
@@ -27,3 +33,6 @@ variable "vpc_security_group_ids" {
 variable "aws_key_name" {}
 variable "aws_key_location" {}
 
+variable "awsnycast_deb_url" {
+  default = "https://github.com/bobtfish/AWSnycast/releases/download/v0.1.5/awsnycast_0.1.5-425_amd64.deb"
+}
