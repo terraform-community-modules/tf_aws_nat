@@ -44,6 +44,7 @@ write_files:
                    - cidr: 0.0.0.0/0
                      instance: SELF
                      healthcheck: public
+                     never_delete: true
              other_azs:
                 find:
                     type: and
