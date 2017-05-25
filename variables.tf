@@ -1,3 +1,9 @@
+variable "name" {}
+variable "tags" {
+  type = "map"
+  default = {}
+  description = "A map of tags to add to all resources"
+}
 variable "ami_name_pattern" {
   default = "ubuntu/images/hvm-ssd/ubuntu-xenial-16.04-amd64-server-*"
   description = "The name filter to use in data.aws_ami"
