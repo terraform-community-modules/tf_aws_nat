@@ -1,4 +1,5 @@
 #cloud-config
+# -*- YAML -*-
 apt_sources:
  - source: "deb http://apt.puppetlabs.com vivid main"
    keyid: 1054b7a24bd6ec30
@@ -40,7 +41,7 @@ write_files:
                           - type: by_tag
                             config:
                                 key: az
-                                value: __MYAZ__
+                                value: ${myaz}
                           - type: by_tag
                             config:
                                 key: type
@@ -58,7 +59,7 @@ write_files:
                             not: true
                             config:
                                 key: az
-                                value: __MYAZ__
+                                value: ${myaz}
                           - type: by_tag
                             config:
                                 key: type
@@ -76,12 +77,12 @@ runcmd:
  - [ iptables, -A, LOGGINGI, -m, limit, --limit, 2/min, -j, LOG, --log-prefix, "IPTables-INPUT-Dropped: ", --log-level, 4 ]
  - [ iptables, -A, LOGGINGF, -j, DROP ]
  - [ iptables, -A, LOGGINGI, -j, DROP ]
- - [ iptables, -A, FORWARD, -s, __NETWORKPREFIX__.0.0/16, -j, ACCEPT ]
+ - [ iptables, -A, FORWARD, -s, ${networkprefix}.0.0/16, -j, ACCEPT ]
  - [ iptables, -A, FORWARD, -j, LOGGINGF ]
  - [ iptables, -P, FORWARD, DROP ]
  - [ iptables, -I, FORWARD, -m, state, --state, "ESTABLISHED,RELATED", -j, ACCEPT ]
- - [ iptables, -t, nat, -I, POSTROUTING, -s, __NETWORKPREFIX__.0.0/16, -d, 0.0.0.0/0, -j, MASQUERADE ]
- - [ iptables, -A, INPUT, -s, __NETWORKPREFIX__.0.0/16, -j, ACCEPT ]
+ - [ iptables, -t, nat, -I, POSTROUTING, -s, ${networkprefix}.0.0/16, -d, 0.0.0.0/0, -j, MASQUERADE ]
+ - [ iptables, -A, INPUT, -s, ${networkprefix}.0.0/16, -j, ACCEPT ]
  - [ iptables, -A, INPUT, -p, tcp, --dport, 22, -m, state, --state, NEW, -j, ACCEPT ]
  - [ iptables, -I, INPUT, -m, state, --state, "ESTABLISHED,RELATED", -j, ACCEPT ]
  - [ iptables, -I, INPUT, -i, lo, -j, ACCEPT ]

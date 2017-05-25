@@ -14,6 +14,16 @@ data "aws_ami" "ami" {
   owners = ["${var.ami_publisher}"]
 }
 
+data "template_file" "user_data" {
+  template = "${file("${path.module}/nat-user-data.conf.tmpl")}"
+  count = "${var.instance_count}"
+
+  vars {
+    myaz = "${element(var.az_list, count.index)}"
+    networkprefix = "${var.networkprefix}"
+  }
+}
+
 resource "aws_instance" "nat" {
     count = "${var.instance_count}"
     ami = "${data.aws_ami.ami.id}"
@@ -26,7 +36,7 @@ resource "aws_instance" "nat" {
     tags {
         Name = "NAT ${element(var.az_list, count.index)}${count.index+1}"
     }
-    user_data = "${replace(replace(file("${path.module}/nat.conf"), "__NETWORKPREFIX__", "${var.networkprefix}"), "__MYAZ__", element(var.az_list, count.index))}"
+    user_data = "${element(data.template_file.user_data.*.rendered, count.index)}"
     provisioner "remote-exec" {
         inline = [
           "while sudo pkill -0 cloud-init; do sleep 2; done"
