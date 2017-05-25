@@ -6,7 +6,8 @@
 
 ## Inputs
 
-  * region
+  * ami_name_pattern
+  * ami_publisher
   * instance_type
   * instance_count
   * az_list
@@ -15,7 +16,6 @@
   * security_groups
   * aws_key_name
   * aws_key_location
-  * account
 
 ## Outputs
 

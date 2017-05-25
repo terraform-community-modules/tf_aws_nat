@@ -1,13 +1,22 @@
-module "ami" {
-  source = "github.com/terraform-community-modules/tf_aws_ubuntu_ami/ebs"
-  instance_type = "${var.instance_type}"
-  region = "${var.region}"
-  distribution = "vivid"
+data "aws_ami" "ami" {
+  most_recent = true
+
+  filter {
+    name   = "name"
+    values = ["${var.ami_name_pattern}"]
+  }
+
+  filter {
+    name   = "virtualization-type"
+    values = ["hvm"]
+  }
+
+  owners = ["${var.ami_publisher}"]
 }
 
 resource "aws_instance" "nat" {
     count = "${var.instance_count}"
-    ami = "${module.ami.ami_id}"
+    ami = "${data.aws_ami.ami.id}"
     instance_type = "${var.instance_type}"
     source_dest_check = false
     iam_instance_profile = "${aws_iam_instance_profile.nat_profile.id}"
