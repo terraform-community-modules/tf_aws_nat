@@ -13,7 +13,7 @@ resource "aws_instance" "nat" {
     iam_instance_profile = "${aws_iam_instance_profile.nat_profile.id}"
     key_name = "${var.aws_key_name}"
     subnet_id = "${element(split(\",\", var.subnet_ids), count.index)}"
-    security_groups = ["${split(\",\", var.security_groups)}"]
+    vpc_security_group_ids = ["${split(\",\", var.vpc_security_group_ids)}"]
     tags {
         Name = "NAT ${element(split(\",\", var.az_list), count.index)}${count.index+1}"
     }
