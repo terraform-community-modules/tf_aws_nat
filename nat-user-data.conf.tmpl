@@ -1,17 +1,11 @@
 #cloud-config
 # -*- YAML -*-
-apt_sources:
- - source: "deb http://apt.puppetlabs.com vivid main"
-   keyid: 1054b7a24bd6ec30
 apt_upgrade: true
 locale: en_US.UTF-8
 packages:
- - puppet
- - git
  - traceroute
  - nmap
  - keepalived
- - python-pip
 write_files:
 -   path: /lib/systemd/system/awsnycast.service
     content: |
