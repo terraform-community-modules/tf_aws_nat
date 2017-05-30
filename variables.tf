@@ -18,7 +18,6 @@ variable "instance_count" {}
 variable "az_list" {
   type = "list"
 }
-variable "networkprefix" {}
 variable "subnet_ids" {
   type = "list"
 }

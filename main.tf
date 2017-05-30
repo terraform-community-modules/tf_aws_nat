@@ -14,13 +14,21 @@ data "aws_ami" "ami" {
   owners = ["${var.ami_publisher}"]
 }
 
+# We are given as input a list of subnets to create the NAT in. Lets use them to find out about the VPC.
+data "aws_subnet" "first" {
+  id = "${var.subnet_ids[0]}"
+}
+data "aws_vpc" "vpc" {
+  id = "${data.aws_subnet.first.vpc_id}"
+}
+
 data "template_file" "user_data" {
   template = "${file("${path.module}/nat-user-data.conf.tmpl")}"
   count = "${var.instance_count}"
 
   vars {
     myaz = "${element(var.az_list, count.index)}"
-    networkprefix = "${var.networkprefix}"
+    vpc_cidr = "${data.aws_vpc.vpc.cidr_block}"
   }
 }
 
