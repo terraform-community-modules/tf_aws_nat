@@ -29,35 +29,27 @@ write_files:
         routetables:
              my_az:
                 find:
-                    type: and
+                    type: subnet
                     config:
-                        filters:
-                          - type: by_tag
-                            config:
-                                key: az
-                                value: ${myaz}
-                          - type: by_tag
-                            config:
-                                key: type
-                                value: private
+                        subnet_id: ${mysubnet}
                 manage_routes:
                    - cidr: 0.0.0.0/0
                      instance: SELF
                      healthcheck: public
+                     never_delete: true
              other_azs:
                 find:
                     type: and
                     config:
                         filters:
-                          - type: by_tag
+                          - type: subnet
                             not: true
                             config:
-                                key: az
-                                value: ${myaz}
-                          - type: by_tag
+                                subnet_id: ${mysubnet}
+                          - type: by_tag_regexp
                             config:
-                                key: type
-                                value: private
+                                key: Name
+                                regexp: ${name}-rt-private-${region}[a-z]
                 manage_routes:
                   - cidr: 0.0.0.0/0
                     instance: SELF
@@ -87,5 +79,5 @@ runcmd:
  - [ iptables, -I, INPUT, -i, lo, -j, ACCEPT ]
  - [ iptables, -A, INPUT, -j, LOGGINGI ]
  - [ iptables, -P, INPUT, DROP ]
- - [ sh, -c, "cd /tmp;wget https://github.com/bobtfish/AWSnycast/releases/download/v0.0.9/awsnycast_0.0.9-249_amd64.deb&&dpkg -i awsnycast_0.0.9-249_amd64.deb" ]
+ - [ sh, -c, "which AWSnycast || { cd /tmp && wget ${awsnycast_deb_url} && dpkg -i awsnycast_*.deb && rm *.deb; }" ]
  - [ systemctl, start, awsnycast ]
