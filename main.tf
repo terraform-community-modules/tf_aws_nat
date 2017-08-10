@@ -55,7 +55,12 @@ resource "aws_instance" "nat" {
         ]
         connection {
           user = "ubuntu"
-          private_key = "${var.aws_key_location}"
+          # If we are using a bastion host ssh in via the private IP
+          # If we set this to an empty string we get the default behaviour.
+          host = "${var.ssh_bastion_host != "" ? self.private_ip : ""}"
+          private_key  = "${var.aws_key_location}"
+          bastion_host = "${var.ssh_bastion_host}"
+          bastion_user = "${var.ssh_bastion_user}"
         }
     }
 }

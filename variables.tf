@@ -32,6 +32,12 @@ variable "vpc_security_group_ids" {
 }
 variable "aws_key_name" {}
 variable "aws_key_location" {}
+variable "ssh_bastion_host" {
+  default = ""
+}
+variable "ssh_bastion_user" {
+  default = ""
+}
 
 variable "awsnycast_deb_url" {
   default = "https://github.com/bobtfish/AWSnycast/releases/download/v0.1.5/awsnycast_0.1.5-425_amd64.deb"
