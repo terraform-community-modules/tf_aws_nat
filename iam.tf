@@ -1,10 +1,10 @@
 resource "aws_iam_instance_profile" "nat_profile" {
-    name = "nat_ha_profile"
+    name = "${var.name}-nat_ha_profile"
     role = "${aws_iam_role.role.name}"
 }
 
 resource "aws_iam_role" "role" {
-    name = "nat_ha_role"
+    name = "${var.name}-nat_ha_role"
     path = "/"
     assume_role_policy = <<EOF
 {
