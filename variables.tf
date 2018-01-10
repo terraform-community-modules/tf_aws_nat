@@ -42,3 +42,8 @@ variable "ssh_bastion_user" {
 variable "awsnycast_deb_url" {
   default = "https://github.com/bobtfish/AWSnycast/releases/download/v0.1.5/awsnycast_0.1.5-425_amd64.deb"
 }
+
+variable "route_table_regexp" {
+  description = "Route table regexp used by AWSnycast"
+  default = "$${name}-rt-private-$${region}[a-z]"
+}
