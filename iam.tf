@@ -1,12 +1,13 @@
 resource "aws_iam_instance_profile" "nat_profile" {
-    name = "${var.name}-nat_ha_profile"
-    role = "${aws_iam_role.role.name}"
+  name = "${var.name}-nat_ha_profile"
+  role = "${aws_iam_role.role.name}"
 }
 
 resource "aws_iam_role" "role" {
-    name = "${var.name}-nat_ha_role"
-    path = "/"
-    assume_role_policy = <<EOF
+  name = "${var.name}-nat_ha_role"
+  path = "/"
+
+  assume_role_policy = <<EOF
 {
     "Version": "2008-10-17",
     "Statement": [
@@ -22,9 +23,10 @@ EOF
 }
 
 resource "aws_iam_role_policy" "modify_routes" {
-    name = "nat_ha_modify_routes"
-    role = "${aws_iam_role.role.id}"
-    policy = <<EOF
+  name = "nat_ha_modify_routes"
+  role = "${aws_iam_role.role.id}"
+
+  policy = <<EOF
 {
   "Version": "2012-10-17",
   "Statement": [
@@ -44,4 +46,3 @@ resource "aws_iam_role_policy" "modify_routes" {
 }
 EOF
 }
-
