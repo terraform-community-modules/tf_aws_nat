@@ -49,7 +49,7 @@ write_files:
                           - type: by_tag_regexp
                             config:
                                 key: Name
-                                regexp: ${route_table_regexp}
+                                regexp: ${name}-${identifier}-${region}[a-z]
                 manage_routes:
                   - cidr: 0.0.0.0/0
                     instance: SELF

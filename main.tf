@@ -36,7 +36,7 @@ data "template_file" "user_data" {
     vpc_cidr           = "${data.aws_vpc.vpc.cidr_block}"
     region             = "${data.aws_region.current.name}"
     awsnycast_deb_url  = "${var.awsnycast_deb_url}"
-    route_table_regexp = "${var.route_table_regexp}"
+    identifier         = "${var.route_table_identifier}"
   }
 }
 
