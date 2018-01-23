@@ -31,12 +31,12 @@ data "template_file" "user_data" {
   count    = "${var.instance_count}"
 
   vars {
-    name               = "${var.name}"
-    mysubnet           = "${element(var.private_subnet_ids, count.index)}"
-    vpc_cidr           = "${data.aws_vpc.vpc.cidr_block}"
-    region             = "${data.aws_region.current.name}"
-    awsnycast_deb_url  = "${var.awsnycast_deb_url}"
-    identifier         = "${var.route_table_identifier}"
+    name              = "${var.name}"
+    mysubnet          = "${element(var.private_subnet_ids, count.index)}"
+    vpc_cidr          = "${data.aws_vpc.vpc.cidr_block}"
+    region            = "${data.aws_region.current.name}"
+    awsnycast_deb_url = "${var.awsnycast_deb_url}"
+    identifier        = "${var.route_table_identifier}"
   }
 }
 

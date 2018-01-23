@@ -56,5 +56,5 @@ variable "awsnycast_deb_url" {
 
 variable "route_table_identifier" {
   description = "Indentifier used by AWSnycast route table regexp"
-  default = "rt-private"
+  default     = "rt-private"
 }
