@@ -54,7 +54,7 @@ variable "awsnycast_deb_url" {
   default = "https://github.com/bobtfish/AWSnycast/releases/download/v0.1.5/awsnycast_0.1.5-425_amd64.deb"
 }
 
-variable "route_table_regexp" {
-  description = "Route table regexp used by AWSnycast"
-  default     = "$${name}-rt-private-$${region}[a-z]"
+variable "route_table_identifier" {
+  description = "Indentifier used by AWSnycast route table regexp"
+  default     = "rt-private"
 }
