@@ -22,9 +22,7 @@ data "aws_vpc" "vpc" {
   id = "${data.aws_subnet.first.vpc_id}"
 }
 
-data "aws_region" "current" {
-  current = true
-}
+data "aws_region" "current" { }
 
 data "template_file" "user_data" {
   template = "${file("${path.module}/nat-user-data.conf.tmpl")}"
