@@ -28,7 +28,7 @@ data "template_file" "user_data" {
   template = "${file("${path.module}/nat-user-data.conf.tmpl")}"
   count    = "${var.instance_count}"
 
-  vars {
+  vars = {
     name              = "${var.name}"
     mysubnet          = "${element(var.private_subnet_ids, count.index)}"
     vpc_cidr          = "${data.aws_vpc.vpc.cidr_block}"
