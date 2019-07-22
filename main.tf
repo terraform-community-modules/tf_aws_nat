@@ -46,7 +46,7 @@ resource "aws_instance" "nat" {
   iam_instance_profile   = "${aws_iam_instance_profile.nat_profile.id}"
   key_name               = "${var.aws_key_name}"
   subnet_id              = "${element(var.public_subnet_ids, count.index)}"
-  vpc_security_group_ids = ["${var.vpc_security_group_ids}"]
+  vpc_security_group_ids = "${var.vpc_security_group_ids}"
   tags                   = "${merge(var.tags, map("Name", format("%s-nat%d", var.name, count.index+1)))}"
   user_data              = "${element(data.template_file.user_data.*.rendered, count.index)}"
 
