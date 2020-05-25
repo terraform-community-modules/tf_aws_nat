@@ -1,8 +1,8 @@
-# tf_aws_nat 
+# tf_aws_nat
 
 ## Module to launch NAT instances on AWS.
 
-This module will provision a specified number of nat instances in the public subnets to allow 
+This module will provision a specified number of nat instances in the public subnets to allow
 outbound internet traffic from the private subnets. For route publishing and High Availability
 each instance runs the [AWSnycast](https://github.com/bobtfish/AWSnycast) service. If the nat
 instance becomes unavailable it will remove the instance from the route table (this requires
@@ -26,7 +26,7 @@ is best for your use case please see the following:
   * `aws_key_name` - The name of the AWS key pair to provision the instances with (required)
   * `ssh_bastion_host` - The ip of the bastion host
   * `ssh_bastion_user` - The name of bastion user (required for ssh_bastion_host)
-  * `aws_key_location` - The contents of private key file for the bastion instance (required for ssh_bastion_host)
+  * `aws_private_key` - The contents of private key file for the bastion instance (required for ssh_bastion_host; this is fed to the `private_key` argument; renamed in v1.4, formerly `aws_key_location`)
   * `tags` - A list of tags to apply to the nat instances
   * `route_table_identifier` - The identifier used in the route table regexp used by AWSnycast. For backwards compatibility it defaults to "rt-private". If you are using the terraform-aws-vpc module you will need to set its value to "private"
 
@@ -72,11 +72,11 @@ module "nat" {
   route_table_identifier = "private"
   ssh_bastion_user       = "ubuntu"
   ssh_bastion_host       = "${aws_instance.bastion.public_ip}"
-  aws_key_location       = "${file("pathtokeyfile")}"
+  # this was formerly aws_key_location, renamed in v1.4
+  aws_private_key        = "${file("pathtokeyfile")}"
 }
 ```
 
 # LICENSE
 
 Apache2, see the included LICENSE file for more information.
-

@@ -40,7 +40,7 @@ variable "vpc_security_group_ids" {
 }
 
 variable "aws_key_name" {}
-variable "aws_key_location" {}
+variable "aws_private_key" {}
 
 variable "ssh_bastion_host" {
   default = ""
