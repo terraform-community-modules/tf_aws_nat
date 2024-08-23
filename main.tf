@@ -28,7 +28,7 @@ data "template_file" "user_data" {
   template = "${file("${path.module}/nat-user-data.conf.tmpl")}"
   count    = "${var.instance_count}"
 
-  vars {
+  vars = {
     name              = "${var.name}"
     mysubnet          = "${element(var.private_subnet_ids, count.index)}"
     vpc_cidr          = "${data.aws_vpc.vpc.cidr_block}"
@@ -46,7 +46,7 @@ resource "aws_instance" "nat" {
   iam_instance_profile   = "${aws_iam_instance_profile.nat_profile.id}"
   key_name               = "${var.aws_key_name}"
   subnet_id              = "${element(var.public_subnet_ids, count.index)}"
-  vpc_security_group_ids = ["${var.vpc_security_group_ids}"]
+  vpc_security_group_ids = "${var.vpc_security_group_ids}"
   tags                   = "${merge(var.tags, map("Name", format("%s-nat%d", var.name, count.index+1)))}"
   user_data              = "${element(data.template_file.user_data.*.rendered, count.index)}"
 
@@ -62,7 +62,7 @@ resource "aws_instance" "nat" {
       # If we set this to an empty string we get the default behaviour.
       host = "${var.ssh_bastion_host != "" ? self.private_ip : ""}"
 
-      private_key  = "${var.aws_key_location}"
+      private_key  = "${var.aws_private_key}"
       bastion_host = "${var.ssh_bastion_host}"
       bastion_user = "${var.ssh_bastion_user}"
     }
